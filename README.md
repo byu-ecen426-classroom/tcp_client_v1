@@ -1,3 +1,3 @@
-# Lab 1
+# TCP Client v1
 
-http://ecenetworking.byu.edu/493r/labs/lab-1/
+https://ecenetworking.byu.edu/426/labs/tcp-client-v1/
