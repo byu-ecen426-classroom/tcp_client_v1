@@ -19,8 +19,9 @@
 #define TCP_CLIENT_DEFAULT_HOST "localhost"
 #define TCP_CLIENT_MAX_RECEIVE_SIZE 1024
 
-// Contains all of the information needed to create to connect to the server and
-// send it a message.
+/*
+Contains all of the information needed to create to connect to the server and send it a message.
+*/
 typedef struct Config {
     char *port;
     char *host;
@@ -28,29 +29,63 @@ typedef struct Config {
     char *message;
 } Config;
 
-// Parses the options given to the program. It will return a Config struct with the necessary
-// information filled in. argc and argv are provided by main. If an error occurs in processing the
-// arguments and options (such as an invalid option), this function will print the correct message
-// and then exit.
-Config tcp_client_parse_arguments(int argc, char *argv[]);
+/*
+Description:
+    Parses the commandline arguments and options given to the program.
+Arguments:
+    int argc: the amount of arguments provided to the program (provided by the main function)
+    char *argv[]: the array of arguments provided to the program (provided by the main function)
+    Config *config: An empty Config struct that will be filled in by this function.
+Return value:
+    Returns a 1 on failure, 0 on success
+*/
+int tcp_client_parse_arguments(int argc, char *argv[], Config *config);
 
-////////////////////////////////////////////////////
-///////////// SOCKET RELATED FUNCTIONS /////////////
-////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
+/////////////////////// SOCKET RELATED FUNCTIONS //////////////////////
+///////////////////////////////////////////////////////////////////////
 
-// Creates a TCP socket and connects it to the specified host and port. It
-// returns the socket file descriptor.
+/*
+Description:
+    Creates a TCP socket and connects it to the specified host and port.
+Arguments:
+    Config config: A config struct with the necessary information.
+Return value:
+    Returns the socket file descriptor or -1 if an error occurs.
+*/
 int tcp_client_connect(Config config);
 
-// Using the the action and message provided by the command line, format the
-// data to follow the protocol and send it to the server.
-void tcp_client_send_message(int sockfd, char *action, char *message);
+/*
+Description:
+    Creates and sends request to server using the socket and configuration.
+Arguments:
+    int sockfd: Socket file descriptor
+    Config config: A config struct with the necessary information.
+Return value:
+    Returns a 1 on failure, 0 on success
+*/
+int tcp_client_send_request(int sockfd, Config config);
 
-// Receive the response from the server. The caller must provide a buffer and
-// the size of the buffer provided.
-void tcp_client_receive_response(int sockfd, char *buf, int buf_size);
+/*
+Description:
+    Receives the response from the server. The caller must provide an already allocated buffer.
+Arguments:
+    int sockfd: Socket file descriptor
+    char *buf: An already allocated buffer to receive the response in
+    int buf_size: The size of the allocated buffer
+Return value:
+    Returns a 1 on failure, 0 on success
+*/
+int tcp_client_receive_response(int sockfd, char *buf, int buf_size);
 
-// Close the socket when your program is done running.
-void tcp_client_close(int sockfd);
+/*
+Description:
+    Closes the given socket.
+Arguments:
+    int sockfd: Socket file descriptor
+Return value:
+    Returns a 1 on failure, 0 on success
+*/
+int tcp_client_close(int sockfd);
 
 #endif
