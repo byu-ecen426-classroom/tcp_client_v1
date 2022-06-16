@@ -17,7 +17,7 @@
 #define TCP_CLIENT_BAD_SOCKET -1
 #define TCP_CLIENT_DEFAULT_PORT "8080"
 #define TCP_CLIENT_DEFAULT_HOST "localhost"
-#define TCP_CLIENT_MAX_RECEIVE_SIZE 1024
+#define TCP_CLIENT_MAX_INPUT_SIZE 1024
 
 /*
 Contains all of the information needed to create to connect to the server and send it a message.
